@@ -34,6 +34,10 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   }
 });
 
+app.get('/', (req: Request, res: Response) => {
+  res.send('Backend is running ✅');
+});
+
 app.use('/api', authRoutes);
 
 app.use('/upload', express.static(path.join(__dirname, '../uploads')));
