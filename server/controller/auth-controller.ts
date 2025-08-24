@@ -17,13 +17,13 @@ export const loginUser = async (req: Request, res: Response) => {
     const result = await authModel.login(req.body);
     res
       .cookie('access_token', result.accessToken, {
-        httpOnly: true,
+        httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'none',
         path: '/',
       })
       .cookie('refresh_token', result.refreshToken, {
-        httpOnly: true,
+        httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'none',
         path: '/',
