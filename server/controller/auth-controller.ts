@@ -19,13 +19,13 @@ export const loginUser = async (req: Request, res: Response) => {
       .cookie('access_token', result.accessToken, {
         httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none',
+        sameSite: 'strict',
         path: '/',
       })
       .cookie('refresh_token', result.refreshToken, {
         httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'none',
+        sameSite: 'strict',
         path: '/',
       })
       .status(200)
