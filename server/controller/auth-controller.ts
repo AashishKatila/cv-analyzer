@@ -18,13 +18,13 @@ export const loginUser = async (req: Request, res: Response) => {
     res
       .cookie('access_token', result.accessToken, {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'none',
         path: '/',
       })
       .cookie('refresh_token', result.refreshToken, {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'none',
         path: '/',
       })
