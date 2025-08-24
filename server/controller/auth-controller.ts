@@ -19,12 +19,14 @@ export const loginUser = async (req: Request, res: Response) => {
       .cookie('access_token', result.accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'none',
+        path: '/',
       })
       .cookie('refresh_token', result.refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'none',
+        path: '/',
       })
       .status(200)
       .json({
@@ -37,25 +39,31 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-
 export const refreshToken = async (req: Request, res: Response) => {
-  try{
+  try {
     const refreshToken = req.cookies.refresh_token;
-    if(!refreshToken){
+    if (!refreshToken) {
       return res.status(401).json({ message: 'No refresh token found' });
     }
 
-    jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!, (err:any, user:any) => {
-      if(err){
+    jwt.verify(
+      refreshToken,
+      process.env.JWT_REFRESH_SECRET!,
+      (err: any, user: any) => {
+        if (err) {
           return res.status(403).json({ message: 'Invalid refresh token' });
-      }else{
-        const accessToken = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET!, { expiresIn: '15m' });
-        return res.status(200).json({ accessToken });
+        } else {
+          const accessToken = jwt.sign(
+            { userId: user.userId },
+            process.env.JWT_SECRET!,
+            { expiresIn: '15m' }
+          );
+          return res.status(200).json({ accessToken });
+        }
       }
-    })
-
-  }catch(error){
-   console.error('Error refreshing token:', error);
+    );
+  } catch (error) {
+    console.error('Error refreshing token:', error);
     res.status(500).json({ message: 'Server error while refreshing token' });
-}
-}
+  }
+};
