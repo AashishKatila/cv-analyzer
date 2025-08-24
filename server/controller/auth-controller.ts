@@ -20,11 +20,15 @@ export const loginUser = async (req: Request, res: Response) => {
         httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
+        path: '/', // available on all routes
+        maxAge: 1000 * 60 * 60 * 24,
       })
       .cookie('refresh_token', result.refreshToken, {
-        httpOnly: false,
+        httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
+        path: '/',
+        maxAge: 1000 * 60 * 60 * 24 * 7,
       })
       .status(200)
       .json({
