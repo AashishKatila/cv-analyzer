@@ -17,16 +17,16 @@ export const loginUser = async (req: Request, res: Response) => {
     const result = await authModel.login(req.body);
     res
       .cookie('access_token', result.accessToken, {
-        httpOnly: false,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        httpOnly: true,
+        secure: false,
+        sameSite: 'none',
         path: '/', // available on all routes
         maxAge: 1000 * 60 * 60 * 24,
       })
       .cookie('refresh_token', result.refreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        secure: false,
+        sameSite: 'none',
         path: '/',
         maxAge: 1000 * 60 * 60 * 24 * 7,
       })
