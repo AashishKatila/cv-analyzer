@@ -18,14 +18,14 @@ export const loginUser = async (req: Request, res: Response) => {
     res
       .cookie('access_token', result.accessToken, {
         httpOnly: true,
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'none',
         path: '/', // available on all routes
         maxAge: 1000 * 60 * 60 * 24,
       })
       .cookie('refresh_token', result.refreshToken, {
         httpOnly: true,
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'none',
         path: '/',
         maxAge: 1000 * 60 * 60 * 24 * 7,
