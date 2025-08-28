@@ -17,7 +17,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://cv-analyzer-psi.vercel.app'],
+    origin: [
+      'http://localhost:3000',
+      'https://cv-analyzer-psi.vercel.app',
+      'https://cv-analyzer-rgoa.onrender.com',
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   })
